@@ -7,10 +7,17 @@ import { Casino } from "./utils/interface";
 import CasinoComponent from "./components/CasinoComponent";
 import AnimatedSection from "./components/AnimatedSection";
 import { blackjackData } from "./data/pages/blackjack";
+import { sicboData } from "./data/pages/sicbo";
+import { kenoData } from "./data/pages/keno";
+import { crapsData } from "./data/pages/craps";
+import { slotsData } from "./data/pages/onlineslots";
 import { rouletteData } from "./data/pages/roulette";
 import { baccaratData } from "./data/pages/baccarat";
 import { casinoGuidesData } from "./data/pages/guides";
 import TopPicksComponent from "./components/TopPicksComponent";
+import CasinoFeatures from './components/CasinoFeatures';
+import PaymentMethods from './components/PaymentMethods';
+import { on } from "events";
 
 async function getPosts() {
   const query = `*[_type == "casino"] | order(orderRank)[0...15] {
@@ -22,6 +29,13 @@ async function getPosts() {
     rating,
     "imageUrl": casinoImage.asset->url,
     termsConditionsUrl,
+    tags[]-> {
+      _id,
+      title,
+      slug {
+        current
+      }
+    },
     categories[]-> {
       _id,
       slug,
@@ -47,28 +61,24 @@ export const revalidate = 60;
 export default async function Home() {
   const casinos: Casino[] = (await getPosts()).slice(0, 15);
 
-  const features = [
-    {
-      icon: <Headphones className="w-8 h-8" />,
-      title: "Customer Support",
-      description: "Last but not least the customer service should have long opening hours, be friendly and always put the player in the driver seat."
-    },
-    {
-      icon: <Shield className="w-8 h-8" />,
-      title: "Secure Platform and Trustworthy Owners",
-      description: "The most important is to play at a platform with great security and that the owners have a good reputation so you know that your personal information and financials are treated with respect."
-    },
-    {
-      icon: <Gamepad2 className="w-8 h-8" />,
-      title: "Quality Games",
-      description: "To get the best gaming experience it is also crucial with a wide variety of quality games. You should be able to play all popular types of games from a wide range of providers."
-    }
-  ];
+  // Get unique payment methods from all casinos
+  const uniquePaymentMethods = Array.from(
+    new Map(
+      casinos.flatMap(casino => casino.paymentMethods || [])
+        .map(method => [method._id, method])
+    ).values()
+  );
+
+
 
   const guides = [
     blackjackData,
     rouletteData,
-    baccaratData
+    baccaratData,
+    crapsData,
+    kenoData,
+    sicboData,
+    slotsData
   ];
 
   return (
@@ -88,21 +98,21 @@ export default async function Home() {
                 radial-gradient(circle at 75% 44%, rgba(255, 23, 69, 0.1) 0%, transparent 50%)
               `
             }}></div>
-            <div className="absolute inset-0 bg-[url('/images/grid.png')] opacity-20"></div>
+           
           </div>
 
           <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
             <div className="flex flex-col lg:flex-row items-center gap-12">
               <div className="flex-1 text-center lg:text-left space-y-8">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FF1745]/10 border border-[#FF1745]/20">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FF1745]/10 border border-[#FF1745]/20 ">
                   <Sparkles className="w-4 h-4 text-[#FF1745]" />
-                  <span className="text-sm font-medium text-[#FF1745]">Top Casino Comparisons 2024</span>
+                  <span className="text-sm font-medium text-[#FF1745]"> First class online casino experience and bonuses offered by leading industry professionals</span>
                 </div>
                 
                 <h1 className="text-5xl md:text-7xl font-bold leading-tight">
-                  <div>Top Casino</div>
+                  <div>Compare Online </div>
                   <div>
-                    Comparisons
+                  Casino Sites in
                     <div className="relative inline-block ml-2">
                       <span className="text-[#FF1745]">2024</span>
                       <div className="absolute -bottom-2 left-0 w-full h-1 bg-[#FF1745]/30 rounded-full"></div>
@@ -111,8 +121,7 @@ export default async function Home() {
                 </h1>
 
                 <p className="text-xl max-w-2xl mx-auto lg:mx-0 text-gray-400 leading-relaxed">
-                  Discover top-rated online casinos with exclusive bonuses and trusted reviews. 
-                  Your journey to responsible gaming starts here.
+                LocoBonus is your go-to site for finding the best online casinos. We rate and offer as many of the best, trustworthy and popular gambling sites out there to help you make better gambling choices. 
                 </p>
 
                 <div className="flex flex-wrap gap-6 items-center justify-center lg:justify-start">
@@ -190,7 +199,7 @@ export default async function Home() {
         <AnimatedSection className="w-full py-20 bg-[#0D0D0D]">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl font-bold text-center mb-12 text-white">
-              Most exciting offers picked by <span className="text-[#FF1745]">GAMBLESTRIKE</span>
+              Most exciting offers picked by <span className="text-[#FF1745]">LOCOBONUS</span>
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -204,17 +213,10 @@ export default async function Home() {
         {/* Features */}
         <AnimatedSection className="w-full py-20 bg-[#1A1A1A]">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="grid md:grid-cols-3 gap-12">
-              {features.map((feature, index) => (
-                <AnimatedSection key={feature.title} delay={index * 0.2} className="text-center space-y-4">
-                  <div className="w-16 h-16 rounded-full bg-[#FF1745]/20 flex items-center justify-center mx-auto text-[#FF1745]">
-                    {feature.icon}
-                  </div>
-                  <h3 className="text-xl font-bold text-white">{feature.title}</h3>
-                  <p className="text-gray-400">{feature.description}</p>
-                </AnimatedSection>
-              ))}
-            </div>
+       
+             {/* Features Section */}
+         <CasinoFeatures />
+            
           </div>
         </AnimatedSection>
 
@@ -233,23 +235,16 @@ export default async function Home() {
             </div>
             <div className="space-y-8">
               <div className="grid md:grid-cols-3 gap-8">
-                {guides.map((guide, index) => (
+              {guides.slice(0, 3).map((guide, index) => (
                   <AnimatedSection key={guide.title} delay={index * 0.2}>
                     <Link href={`/${guide.slug}`}>
-                      <Card className="h-full border border-[#FF1745] bg-[#1A1A1A]/50 hover:bg-[#1A1A1A] transition-all duration-300">
-                        <CardContent className="p-6 flex flex-col h-full space-y-4">
-                          <div className="relative w-full h-[200px]">
-                            <Image
-                              src={guide.image}
-                              alt={guide.title}
-                              fill
-                              className="object-cover rounded-lg"
-                            />
-                          </div>
-                          <h3 className="text-xl font-bold text-[#FF1745]">{guide.title}</h3>
-                          <p className="text-gray-400 flex-grow">{guide.description}</p>
-                        </CardContent>
-                      </Card>
+                      <div className="bg-[#1A1F2C] border border-[#FF1745]/20 rounded-2xl p-8 hover:border-[#FF1745]/40 transition-colors h-full">
+                        <p className="text-md uppercase tracking-wider text-gray-400 game-guide-label">Game guides</p>
+                        <h2 className="text-5xl font-bold mb-4">{guide.title}</h2>
+                        <div className="w-24 h-1 bg-[#FF1745] mb-6"></div>
+                        <p className="text-gray-300 mb-4">{guide.description}</p>
+                       
+                      </div>
                     </Link>
                   </AnimatedSection>
                 ))}
@@ -263,6 +258,14 @@ export default async function Home() {
             </div>
           </div>
         </AnimatedSection>
+
+       
+
+       
+
+        {/* Payment Methods */}
+        <PaymentMethods paymentMethods={uniquePaymentMethods} />
+
       </main>
     </div>
   );

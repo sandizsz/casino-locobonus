@@ -8,7 +8,9 @@ async function getCategories() {
     slug,
     _id
   }`;
-  return await client.fetch(query);
+  
+  // Add revalidation
+  return await client.fetch(query, {}, { next: { revalidate: 60 } });
 }
 
 const Navbar = async () => {

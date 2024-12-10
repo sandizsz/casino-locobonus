@@ -21,7 +21,7 @@ export function NavbarClient({ categories }: NavbarClientProps) {
         <div className="absolute inset-0 opacity-10">
           <div className="absolute w-[300px] h-[300px] rounded-full bg-[#FF1745] blur-[150px] -top-48 -left-24"></div>
         </div>
-        <div className="absolute inset-0 bg-[url('/images/grid.png')] opacity-20"></div>
+       
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
@@ -111,9 +111,9 @@ export function NavbarClient({ categories }: NavbarClientProps) {
             <div className="flex-1 flex justify-end">
               <div className="flex space-x-1 bg-[#1A1A1A]/50 backdrop-blur-sm rounded-full border border-[#FF1745]/10 p-1">
                 {[
-                  { href: "/casino-guides", label: "Casino Guides" },
-                  { href: "/payment-methods", label: "Payment Methods" },
-                  { href: "/how-to-play", label: "How to Play" }
+                  { href: "/game-guides", label: "Game Guides" },
+    
+                  { href: "/gambling-advice", label: "Gambling Advice" }
                 ].map((item) => (
                   <Link
                     key={item.href}
@@ -154,9 +154,8 @@ export function NavbarClient({ categories }: NavbarClientProps) {
             ))}
             
             {[
-              { href: "/casino-guides", label: "Casino Guides" },
-              { href: "/payment-methods", label: "Payment Methods" },
-              { href: "/how-to-play", label: "How to Play" }
+              { href: "/game-guides", label: "Game Guides" },
+              { href: "/gambling-advice", label: "Gambling Advice" }
             ].map((item) => (
               <Link
                 key={item.href}

@@ -70,7 +70,7 @@ export default async function CategoryPage({ params }: PageProps) {
   
   if (!category) {
     return (
-      <div className="min-h-screen bg-[#0D1117] flex items-center justify-center">
+      <div className="min-h-screen from-[#1A1A1A] to-[#0D0D0D] flex items-center justify-center">
         <p className="text-white">Category not found</p>
       </div>
     );
@@ -79,10 +79,10 @@ export default async function CategoryPage({ params }: PageProps) {
   const casinos: Casino[] = await getCasinosByCategory(slug);
 
   return (
-    <div className="min-h-screen bg-[#0D1117]">
-      <AnimatedSection className="w-full py-20 bg-gradient-to-b from-[#1E2A44] to-[#0D1117] relative overflow-hidden">
+    <div className="min-h-screen from-[#1A1A1A] to-[#0D0D0D]">
+      <AnimatedSection className="w-full py-20 bg-gradient-to-b from-[#1A1A1A] to-[#0D0D0D] relative overflow-hidden">
         <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl md:text-6xl font-['Orbitron'] font-bold text-center text-[#FFDD00] [text-shadow:_0_0_30px_#FFDD00] mb-12">
+          <h1 className="text-4xl md:text-6xl font-['Orbitron'] font-bold text-center text-[#FF1745] [text-shadow:_0_0_30px_#FF1745] mb-12">
             {category.title}
           </h1>
 
@@ -95,11 +95,15 @@ export default async function CategoryPage({ params }: PageProps) {
           )}
           
           <div className="space-y-6">
-            {casinos?.map((casino, index) => (
-              <AnimatedSection key={casino._id}>
-                <CasinoComponent casino={casino} index={index} />
-              </AnimatedSection>
-            ))}
+            <div className="grid md:grid-cols-3 gap-6">
+              {casinos?.map((casino, index) => (
+                <div key={casino._id} className="md:col-span-1">
+                  <AnimatedSection>
+                    <CasinoComponent casino={casino} index={index} />
+                  </AnimatedSection>
+                </div>
+              ))}
+            </div>
 
             {(!casinos || casinos.length === 0) && (
               <div className="text-center p-12 bg-[#1E2A44]/50 rounded-lg border border-[#00A3FF] shadow-[0_0_20px_rgba(0,163,255,0.3)]">

@@ -40,6 +40,14 @@ export default defineConfig({
                   .title('Categories')
                   .filter('_type == "category"')
               ),
+              S.listItem()
+              .title('Tags')
+              .schemaType('tag')
+              .child(
+                S.documentList()
+                  .title('Tags')
+                  .filter('_type == "tag"')
+              ),
             S.listItem()
               .title('Payment Methods')
               .schemaType('paymentMethod')

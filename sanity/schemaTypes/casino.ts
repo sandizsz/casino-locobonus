@@ -33,7 +33,7 @@ export const casinoType = defineType({
       name: 'rating',
       title: 'Rating',
       type: 'number',
-      validation: (Rule) => Rule.min(0).max(5),
+      validation: (Rule) => Rule.min(0).max(10),
     },
     {
       name: 'offerUrl',
@@ -71,6 +71,14 @@ export const casinoType = defineType({
         type: "array",
         of: [{ type: "reference", to: [{ type: "category"}]}],
 
+    },
+
+    {
+      name: 'tags',
+      title: 'Tags',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'tag' }] }],
+      validation: (Rule) => Rule.unique()
     },
     {
         name: 'paymentMethods',

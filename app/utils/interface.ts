@@ -19,6 +19,14 @@ export interface PaymentMethod {
   };
 }
 
+export interface Tag {
+  _id: string;
+  title: string;
+  slug: {
+    current: string;
+  };
+}
+
 export interface Casino {
   _id: string;
   offerTitle: string;
@@ -29,6 +37,7 @@ export interface Casino {
   imageUrl: string;
   termsConditionsUrl: string;
   categories: Category[];
+  tags: Tag[];
   paymentMethods: PaymentMethod[];
 }
 

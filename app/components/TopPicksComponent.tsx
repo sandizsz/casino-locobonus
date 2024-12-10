@@ -10,7 +10,15 @@ interface TopPicksComponentProps {
 }
 
 const TopPicksComponent = ({ casinos }: TopPicksComponentProps) => {
-  const categories = ["HOT", "NEW", "EXCLUSIVE", "VIP"]
+  // Define the order of tags we want to display
+  const tagOrder = ['hot', 'new', 'exclusive', 'vip'];
+  
+  // Filter casinos to get one casino per tag, following our preferred order
+  const topPicks = tagOrder.map(tagSlug => {
+    return casinos.find(casino => 
+      casino.tags?.some((tag: { slug: { current: string } }) => tag.slug.current.toLowerCase() === tagSlug)
+    );
+  }).filter((casino): casino is Casino => casino !== undefined);
 
   return (
     <div className="w-full bg-[#0D0D0D] py-20">
@@ -27,7 +35,7 @@ const TopPicksComponent = ({ casinos }: TopPicksComponentProps) => {
 
         {/* Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {casinos.slice(0, 4).map((casino, index) => (
+          {topPicks.map((casino, index) => (
             <div 
               key={casino._id} 
               className="group relative bg-gradient-to-br from-[#1E1E1E] to-[#2B2B2B] rounded-2xl hover:-translate-y-2 transition-transform duration-300"
@@ -37,8 +45,8 @@ const TopPicksComponent = ({ casinos }: TopPicksComponentProps) => {
               
               {/* Category Badge */}
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
-                <div className="bg-gradient-to-r from-[#FF1745] to-[#D90429] text-white text-xs font-bold px-6 py-1.5 rounded-full shadow-lg">
-                  {categories[index]}
+                <div className="bg-gradient-to-r from-[#FF1745] to-[#D90429] text-white text-sm font-bold px-6 py-1.5 rounded-full shadow-lg">
+                  {casino.tags?.[0]?.title || tagOrder[index].toUpperCase()}
                 </div>
               </div>
 
