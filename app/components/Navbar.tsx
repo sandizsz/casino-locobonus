@@ -15,7 +15,7 @@ const Navbar = async () => {
   const categories: Category[] = await getCategories();
   
   return (
-    <header className="sticky top-0 z-50 w-full bg-[#1E2A44]">
+    <header className="sticky top-0 z-50 w-full bg-gradient-to-r from-[#FF1745] to-[#1E2A44] shadow-lg">
       <NavbarClient categories={categories} />
     </header>
   );

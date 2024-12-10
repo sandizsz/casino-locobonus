@@ -1,6 +1,8 @@
+
+
 import React from 'react'
 import Image from "next/image";
-import ClaimButton from './ClaimButton'
+import Link from 'next/link'
 import { PortableText, PortableTextReactComponents } from '@portabletext/react'
 import { TypedObject } from '@portabletext/types'
 
@@ -35,156 +37,142 @@ interface Casino {
   paymentMethods: PaymentMethod[];
 }
 
-interface CasinoComponentProps {
+interface CasinoProps {
   casino: Casino;
   index: number;
 }
 
-const CasinoComponent: React.FC<CasinoComponentProps> = ({ casino, index }) => {
+const portableTextComponents = {
+  list: {
+    bullet: ({ children }) => (
+      <ul className="list-disc pl-5 space-y-2">{children}</ul>
+    ),
+  },
+  listItem: {
+    bullet: ({ children }) => (
+      <li className="text-white">{children}</li>
+    ),
+  },
+  marks: {
+    strong: ({ children }) => (
+      <strong className="font-bold text-[#FFDD00]">{children}</strong>
+    ),
+    em: ({ children }) => (
+      <em className="italic">{children}</em>
+    ),
+  },
+} satisfies Partial<PortableTextReactComponents>;
 
+const CasinoComponent: React.FC<CasinoProps> = ({ casino, index }) => {
 
-  const portableTextComponents = {
-    list: {
-      bullet: ({ children }) => (
-        <ul className="list-disc pl-5 space-y-2">{children}</ul>
-      ),
-    },
-    listItem: {
-      bullet: ({ children }) => (
-        <li className="text-white">{children}</li>
-      ),
-    },
-    marks: {
-      strong: ({ children }) => (
-        <strong className="font-bold text-[#FFDD00]">{children}</strong>
-      ),
-      em: ({ children }) => (
-        <em className="italic">{children}</em>
-      ),
-    },
-  } satisfies Partial<PortableTextReactComponents>;
+  // Helper function to get score text based on rating
+  const getScoreText = (rating: number) => {
+    if (rating >= 4.5) return 'Excellent';
+    if (rating >= 4.0) return 'Great';
+    if (rating >= 3.5) return 'Very Good';
+    if (rating >= 3.0) return 'Good';
+    return 'Fair';
+  };
+
+  // Calculate the rating arc path
+  const getRatingPath = (rating: number) => {
+    const radius = 30;
+    const circumference = Math.PI * radius;
+    const progressLength = (rating / 5) * circumference;
+    
+    return {
+      background: `M 5 35 A ${radius} ${radius} 0 0 1 65 35`,
+      progress: `M 5 35 A ${radius} ${radius} 0 0 1 65 35`,
+      dashArray: `${progressLength} ${circumference}`
+    };
+  };
+
+  const paths = getRatingPath(casino.rating);
 
   return (
-    <div className="relative group">
-      <div className="absolute inset-0 bg-gradient-to-r from-[#00A3FF] to-[#FFDD00] opacity-100 blur-lg group-hover:opacity-100 transition-opacity duration-300"></div>
-      <div className="relative p-6 bg-[#1E2A44] border border-[#00A3FF] rounded-lg shadow-[0_0_20px_rgba(0,163,255,0.3)] hover:shadow-[0_0_30px_rgba(0,163,255,0.5)] transition-all duration-300">
-        {/* Position Number */}
-        <div className="z-10 absolute -top-px -left-px w-14 h-14 flex items-center justify-center bg-[#000000] rounded-tl-lg rounded-br-lg border-r-2 border-b-2 border-[#00A3FF] shadow-[4px_4px_20px_rgba(0,163,255,0.3)]">
-          <span className="font-['Orbitron'] font-bold text-xl bg-gradient-to-r from-[#00A3FF] to-[#FFDD00] text-transparent bg-clip-text [text-shadow:_0_0_10px_rgba(0,163,255,0.5)]">
-            #{index + 1}
-          </span>
-        </div>
-        <div className="flex flex-col md:flex-row items-center gap-6">
-          {/* Left side with Casino Logo and Ranking */}
-          <div className="w-full md:w-1/4 relative">
-            {/* Casino Logo */}
-            <div className="relative w-full aspect-square rounded-lg overflow-hidden border border-[#00A3FF]/30">
+    <div className="relative group h-full">
+      <div className="relative bg-[#1E1E1E] rounded-xl overflow-hidden flex flex-col h-full">
+        {/* Header with Casino Name and Rating */}
+        <div className="flex items-center justify-between p-3 bg-[#2B2B2B]">
+          <div className="flex items-center gap-2">
+            <div className="relative w-8 h-8">
               <Image
                 src={casino.imageUrl}
                 alt={casino.offerTitle}
                 fill
-                className="object-cover"
+                className="object-contain rounded"
               />
             </div>
+            <h3 className="text-base font-semibold text-white">
+              {casino.offerTitle.split(' ')[0]}
+            </h3>
           </div>
-
-          {/* Casino Details */}
-          <div className="flex-1">
-            <div className="space-y-4">
-              <div>
-                <h3 className="text-xl font-['Orbitron'] font-bold text-[#FFDD00] [text-shadow:_0_0_30px_#FFDD00] mb-2">
-                  {casino.offerDescription}
-                </h3>
-                <p className="text-2xl text-white font-['Rajdhani']">{casino.offerTitle}</p>
-              </div>
-
-              {/* Offer Text with Bullet Points */}
-              <div className="text-white">
-                {casino.offerText && (
-                  <PortableText 
-                    value={casino.offerText}
-                    components={portableTextComponents}
-                  />
-                )}
+          
+          {/* Rating Display */}
+          <div className="flex flex-col items-end">
+            <div className="flex items-center gap-1 mb-1">
+              <span className="text-sm text-gray-400">Score:</span>
+              <span className="text-sm font-medium text-white">{getScoreText(casino.rating)}</span>
+            </div>
+            <div className="relative w-[70px] h-[40px]">
+              <svg viewBox="0 0 70 40" className="w-full h-full">
+                {/* Background arc */}
+                <path
+                  d={paths.background}
+                  stroke="#2B2B2B"
+                  strokeWidth="4"
+                  fill="none"
+                />
+                {/* Progress arc */}
+                <path
+                  d={paths.progress}
+                  stroke="#FF1745"
+                  strokeWidth="4"
+                  strokeDasharray={paths.dashArray}
+                  fill="none"
+                />
+                {/* Pointer */}
+                <circle
+                  cx="35"
+                  cy="35"
+                  r="4"
+                  fill="#FF1745"
+                />
+              </svg>
+              {/* Rating number */}
+              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 flex items-center gap-0.5">
+                <span className="text-[#FF1745] font-bold text-sm">{casino.rating}</span>
+                <span className="text-xs text-gray-400">/5</span>
               </div>
             </div>
-
-            {/* Payment Methods */}
-            {casino.paymentMethods && casino.paymentMethods.length > 0 && (
-              <div className="flex flex-wrap gap-2 mt-8">
-                {casino.paymentMethods.slice(0, 10).map((method) => {
-    
-                  return (
-                    <div 
-                      key={method._id}
-                      className="relative w-14 h-10 bg-white/10 backdrop-blur-sm rounded-md p-2 flex items-center justify-center border border-white/20 shadow-[0_0_10px_rgba(255,255,255,0.1)]"
-                      title={method.name}
-                    >
-                      {method.image?.asset?.url ? (
-                        <Image
-                          src={method.image.asset.url}
-                          alt={method.name}
-                          width={40}
-                          height={24}
-                          className="object-contain"
-                        />
-                      ) : (
-                        <span className="text-xs text-white">{method.name}</span>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            )}
           </div>
+        </div>
 
-          {/* Call to Action with Rating */}
-          <div className="w-full md:w-auto flex flex-col items-center gap-4">
-            {/* Rating */}
-            <div className="flex flex-col items-center gap-1 mb-2">
-              <div className="text-3xl font-bold text-[#FFDD00] ">
-                {casino.rating.toFixed(1)}
-              </div>
-              <div className="flex">
-                {[1, 2, 3, 4, 5].map((star) => {
-                  const starValue = casino.rating - (star - 1);
-                  const fillPercentage = Math.max(0, Math.min(1, starValue)) * 100;
-                  
-                  return (
-                    <svg
-                      key={star}
-                      className="w-6 h-6"
-                      viewBox="0 0 20 20"
-                    >
-                      <defs>
-                        <linearGradient id={`star-fill-${star}`}>
-                          <stop offset={`${fillPercentage}%`} stopColor="#FFDD00" />
-                          <stop offset={`${fillPercentage}%`} stopColor="#4B5563" />
-                        </linearGradient>
-                      </defs>
-                      <path
-                        fill={`url(#star-fill-${star})`}
-                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                      />
-                    </svg>
-                  );
-                })}
-              </div>
-            </div>
+        {/* Main Bonus Content */}
+        <div className="p-4 flex-grow">
+          <h4 className="text-xl font-bold text-white mb-3">
+            {casino.offerDescription}
+          </h4>
+        </div>
 
-            <ClaimButton 
-offerUrl={casino.offerUrl}
-  offerTitle={casino.offerTitle}  // Add this line
-/>
+        {/* CTA Button */}
+        <div className="relative mt-auto">
+          {casino.termsConditionsUrl && (
             <a
               href={casino.termsConditionsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-[#C0C0C0] hover:text-[#00A3FF] transition-colors text-center"
+              className="absolute -top-6 right-3 text-xs text-gray-400 hover:text-[#FF1745] transition-colors"
             >
               T&Cs Apply
             </a>
-          </div>
+          )}
+          <Link 
+            href={casino.offerUrl}
+            className="block bg-[#FF1745] hover:bg-[#D90429] text-white font-bold text-lg py-3 text-center transition-all duration-300"
+          >
+            Play
+          </Link>
         </div>
       </div>
     </div>

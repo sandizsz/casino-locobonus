@@ -3,11 +3,11 @@ import { Button } from "./ui/button"
 import Link from "next/link"
 
 interface ClaimButtonProps {
-  offerUrl: string;    // Add this back
+  href: string;
   offerTitle: string;
 }
 
-export default function ClaimButton({ offerUrl, offerTitle }: ClaimButtonProps) {
+export default function ClaimButton({ href, offerTitle }: ClaimButtonProps) {
   const friendlyUrl = `/${offerTitle.toLowerCase().replace(/\s+/g, '')}-offer`;
 
   return (
@@ -15,14 +15,14 @@ export default function ClaimButton({ offerUrl, offerTitle }: ClaimButtonProps) 
       href={friendlyUrl}
       onClick={(e) => {
         e.preventDefault();
-        window.open(offerUrl, '_blank');  // Fallback to actual URL
+        window.open(href, '_blank');
       }}
     >
       <Button
-        className="bg-[#00A3FF] hover:bg-[#FFDD00] text-white hover:text-[#0D1117] shadow-[0_0_20px_rgba(0,163,255,0.3)] hover:shadow-[0_0_30px_rgba(255,221,0,0.5)] transition-all duration-300 font-['Rajdhani'] text-lg font-bold"
-        size="lg"
+        className="w-full bg-gradient-to-r from-[#D90429] to-[#FF1745] hover:from-[#FF1745] hover:to-[#D90429] text-white font-bold text-lg px-8 py-4 rounded-lg transform transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(217,4,41,0.3)] relative overflow-hidden group"
       >
-        Claim Bonus
+        <span className="relative z-10">Claim Bonus</span>
+        <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
       </Button>
     </Link>
   );
