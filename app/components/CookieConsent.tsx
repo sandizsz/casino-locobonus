@@ -44,7 +44,7 @@ const CookieConsentBanner = () => {
         cursor: "pointer",
         transition: "background-color 0.2s ease",
         whiteSpace: "nowrap",
-        border: "none",
+        border: "none"
       }}
       declineButtonStyle={{
         background: "transparent",
@@ -57,7 +57,7 @@ const CookieConsentBanner = () => {
         margin: "0 10px",
         cursor: "pointer",
         transition: "all 0.2s ease",
-        whiteSpace: "nowrap",
+        whiteSpace: "nowrap"
       }}
       expires={365}
       enableDeclineButton
