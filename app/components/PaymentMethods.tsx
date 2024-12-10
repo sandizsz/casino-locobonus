@@ -34,7 +34,7 @@ export default function PaymentMethods({ paymentMethods }: PaymentMethodsProps) 
           {paymentMethods.map((method) => (
             <div 
               key={method._id}
-              className="w-[calc(50%-8px)] md:w-[calc(25%-12px)] lg:w-[calc(16.666%-14px)] p-4 rounded-lg bg-[#2B2B2B] border border-[#FF1745]/10 hover:border-[#FF1745]/30 transition-all duration-300"
+              className="w-[calc(50%-8px)] md:w-[calc(25%-12px)] lg:w-[calc(25%-14px)] p-4 rounded-lg bg-[#2B2B2B] border border-[#FF1745]/10 hover:border-[#FF1745]/30 transition-all duration-300"
             >
               <div className="relative w-full h-12 bg-white/5 rounded flex items-center justify-center overflow-hidden p-2">
                 {method.image?.asset?.url ? (

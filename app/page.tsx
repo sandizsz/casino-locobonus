@@ -1,5 +1,5 @@
-import { Card, CardContent } from "./components/ui/card";
-import { Headphones, Shield, Gamepad2, ArrowRight, Sparkles } from 'lucide-react';
+
+import { ArrowRight, Sparkles } from 'lucide-react';
 import Image from "next/image";
 import Link from "next/link";
 import { client } from "../sanity/lib/client";
@@ -17,7 +17,7 @@ import { casinoGuidesData } from "./data/pages/guides";
 import TopPicksComponent from "./components/TopPicksComponent";
 import CasinoFeatures from './components/CasinoFeatures';
 import PaymentMethods from './components/PaymentMethods';
-import { on } from "events";
+
 
 async function getPosts() {
   const query = `*[_type == "casino"] | order(orderRank)[0...15] {
@@ -240,7 +240,7 @@ export default async function Home() {
                     <Link href={`/${guide.slug}`}>
                       <div className="bg-[#1A1F2C] border border-[#FF1745]/20 rounded-2xl p-8 hover:border-[#FF1745]/40 transition-colors h-full">
                         <p className="text-md uppercase tracking-wider text-gray-400 game-guide-label">Game guides</p>
-                        <h2 className="text-5xl font-bold mb-4">{guide.title}</h2>
+                        <h2 className="text-2xl font-bold mb-4">{guide.title}</h2>
                         <div className="w-24 h-1 bg-[#FF1745] mb-6"></div>
                         <p className="text-gray-300 mb-4">{guide.description}</p>
                        

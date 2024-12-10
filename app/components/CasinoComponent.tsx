@@ -16,7 +16,7 @@ interface Category {
   };
 }
 
-const revalidate = 0;
+
 
 interface PaymentMethod {
   _id: string;
@@ -47,6 +47,8 @@ interface CasinoProps {
   index: number;
 }
 
+/*
+
 const portableTextComponents = {
   list: {
     bullet: ({ children }) => (
@@ -67,6 +69,8 @@ const portableTextComponents = {
     ),
   },
 } satisfies Partial<PortableTextReactComponents>;
+
+*/
 
 const CasinoComponent: React.FC<CasinoProps> = ({ casino, index }) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
