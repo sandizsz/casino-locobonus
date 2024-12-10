@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Image from "next/image";
 import Link from 'next/link'
-import { PortableTextReactComponents } from '@portabletext/react'
 import { TypedObject } from '@portabletext/types'
 import GaugeComponent from 'react-gauge-component'
 import { Wallet, ChevronDown } from 'lucide-react'
@@ -47,30 +46,6 @@ interface CasinoProps {
   index: number;
 }
 
-/*
-
-const portableTextComponents = {
-  list: {
-    bullet: ({ children }) => (
-      <ul className="list-disc pl-5 space-y-2">{children}</ul>
-    ),
-  },
-  listItem: {
-    bullet: ({ children }) => (
-      <li className="text-white">{children}</li>
-    ),
-  },
-  marks: {
-    strong: ({ children }) => (
-      <strong className="font-bold text-[#FFDD00]">{children}</strong>
-    ),
-    em: ({ children }) => (
-      <em className="italic">{children}</em>
-    ),
-  },
-} satisfies Partial<PortableTextReactComponents>;
-
-*/
 
 const CasinoComponent: React.FC<CasinoProps> = ({ casino, index }) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
