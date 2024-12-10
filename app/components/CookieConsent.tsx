@@ -11,13 +11,13 @@ const CookieConsentBanner = () => {
       declineButtonText="Decline"
       cookieName="casino_cookie_consent"
       style={{
-        background: "#1E2329",
+        background: "#1a1a1a",
         fontFamily: "var(--font-geist-sans)",
         padding: "16px",
         alignItems: "center",
         fontSize: "16px",
         position: "fixed",
-        boxShadow: "0 -4px 16px rgba(0, 0, 0, 0.1)",
+        boxShadow: "0 -4px 16px rgba(0, 0, 0, 0.3)",
         zIndex: 999999,
         left: 0,
         right: 0,
@@ -29,11 +29,12 @@ const CookieConsentBanner = () => {
         flexWrap: "wrap",
         gap: "16px",
         transform: "translateZ(0)",
+        color: "#ffffff",
       }}
       containerClasses="fixed-cookie-banner"
       buttonWrapperClasses="cookie-buttons"
       buttonStyle={{
-        background: "#4F46E5",
+        background: "#e50914",
         color: "white",
         fontSize: "15px",
         borderRadius: "6px",
@@ -43,10 +44,11 @@ const CookieConsentBanner = () => {
         cursor: "pointer",
         transition: "background-color 0.2s ease",
         whiteSpace: "nowrap",
+        border: "none",
       }}
       declineButtonStyle={{
         background: "transparent",
-        border: "1px solid #4F46E5",
+        border: "2px solid #e50914",
         color: "white",
         fontSize: "15px",
         borderRadius: "6px",
@@ -74,7 +76,7 @@ const CookieConsentBanner = () => {
           href="/cookie-policy" 
           style={{ 
             textDecoration: "underline",
-            color: "#4F46E5",
+            color: "#e50914",
             fontWeight: "500",
             whiteSpace: "nowrap",
           }}
