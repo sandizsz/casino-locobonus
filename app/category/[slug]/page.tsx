@@ -31,7 +31,8 @@ async function getCasinosByCategory(slug: string) {
     "categoryUrls": categoryUrls[] {
       "categoryId": category->_id,
       "categorySlug": category->slug.current,
-      url
+      url,
+      urlNumber
     },
     categories[]-> {
       _id,
