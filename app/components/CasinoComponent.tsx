@@ -124,7 +124,7 @@ const CasinoComponent: React.FC<CasinoProps> = ({ casino, index, categorySlug })
         {/* Header with Casino Name and Rating */}
         <div className="flex items-center justify-between p-2 pb-8 bg-[#2B2B2B]">
           <div className="flex items-center gap-2">
-            <div className="relative w-16 h-16">
+            <div className="relative w-20 h-20">
               <Image
                 src={casino.imageUrl}
                 alt={casino.offerTitle}
@@ -132,7 +132,7 @@ const CasinoComponent: React.FC<CasinoProps> = ({ casino, index, categorySlug })
                 className="object-cover rounded"
               />
             </div>
-            <h3 className="text-base font-semibold text-white">
+            <h3 className="text-sm font-semibold text-white">
               {casino.offerTitle}
             </h3>
           </div>
@@ -194,8 +194,8 @@ const CasinoComponent: React.FC<CasinoProps> = ({ casino, index, categorySlug })
         </div>
 
         {/* Position Number */}
-        <div className="z-10 absolute -top-px -left-px w-10 h-10 flex items-center justify-center bg-[#FF1745] rounded-tl-lg rounded-br-lg border-r-2 border-b-2 border-[#FF1745] shadow-[4px_4px_20px_rgba(255,23,69,0.3)]">
-          <span className="font-['Orbitron'] font-bold text-sm text-white [text-shadow:_0_0_10px_rgba(255,255,255,0.5)]">
+        <div className="z-10 absolute -top-px -left-px w-9 h-9 flex items-center justify-center bg-[#FF1745] rounded-tl-lg rounded-br-lg border-r-2 border-b-2 border-[#FF1745] shadow-[4px_4px_20px_rgba(255,23,69,0.3)]">
+          <span className="font-['Orbitron'] font-bold text-[12px] text-white [text-shadow:_0_0_10px_rgba(255,255,255,0.5)]">
             #{casino.orderRank || index + 1}
           </span>
         </div>

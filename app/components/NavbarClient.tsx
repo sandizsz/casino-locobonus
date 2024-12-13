@@ -27,7 +27,7 @@ export function NavbarClient({ categories }: NavbarClientProps) {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="flex items-center h-24">
           {/* Mobile Layout */}
-          <div className="2xl:hidden flex items-center justify-between w-full">
+          <div className="lg:hidden flex items-center justify-between w-full">
             {/* Left - Logo */}
             <div className="flex-1">
               <Link href="/" className="flex items-center group">
@@ -47,31 +47,32 @@ export function NavbarClient({ categories }: NavbarClientProps) {
             {/* Right - Burger Menu */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="relative z-50 w-10 h-10 rounded-full bg-[#1A1A1A]/50 backdrop-blur-sm border border-[#FF1745]/10 flex items-center justify-center group"
+              className="relative z-50 flex items-center space-x-3 px-4 py-2.5 rounded-full bg-gradient-to-r from-[#1A1A1A] to-[#242424] hover:from-[#FF1745] hover:to-[#FF4D6B] backdrop-blur-sm border border-[#FF1745]/20 group transition-all duration-300"
               aria-label="Toggle menu"
             >
-              <div className="w-6 h-6 relative">
-                <span className={`absolute left-0 h-0.5 bg-current transition-all duration-300 ${
+              <span className="text-[#C0C0C0] group-hover:text-white font-medium tracking-wide transition-colors duration-300">Menu</span>
+              <div className="w-5 h-5 relative flex items-center justify-center">
+                <span className={`absolute h-[2px] bg-current transition-all duration-300 ${
                   isMenuOpen 
-                    ? "top-3 w-6 rotate-45 bg-white" 
-                    : "top-1 w-4 bg-[#C0C0C0] group-hover:bg-[#FF1745]"
+                    ? "top-[9px] w-5 rotate-45 bg-white" 
+                    : "top-[4px] w-3.5 bg-[#C0C0C0] group-hover:bg-white group-hover:w-5"
                 }`}></span>
-                <span className={`absolute left-0 top-3 h-0.5 transition-all duration-300 ${
+                <span className={`absolute h-[2px] transition-all duration-300 ${
                   isMenuOpen
                     ? "w-0 opacity-0"
-                    : "w-6 bg-[#C0C0C0] group-hover:bg-[#FF1745]"
+                    : "w-5 bg-[#C0C0C0] group-hover:bg-white"
                 }`}></span>
-                <span className={`absolute left-0 h-0.5 bg-current transition-all duration-300 ${
+                <span className={`absolute h-[2px] bg-current transition-all duration-300 ${
                   isMenuOpen
-                    ? "top-3 w-6 -rotate-45 bg-white"
-                    : "top-5 w-5 bg-[#C0C0C0] group-hover:bg-[#FF1745]"
+                    ? "top-[9px] w-5 -rotate-45 bg-white"
+                    : "top-[14px] w-4 bg-[#C0C0C0] group-hover:bg-white group-hover:w-5"
                 }`}></span>
               </div>
             </button>
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden 2xl:flex flex-1 items-center">
+          <div className="hidden lg:flex flex-1 items-center">
             {/* Left side - Casino Categories */}
             <div className="flex-1 flex justify-start">
               <div className="flex space-x-1 bg-[#1A1A1A]/50 backdrop-blur-sm rounded-full border border-[#FF1745]/10 p-1">
@@ -79,7 +80,7 @@ export function NavbarClient({ categories }: NavbarClientProps) {
                   <Link
                     key={category._id}
                     href={`/category/${category.slug.current}`}
-                    className={`whitespace-nowrap px-3 lg:px-4 py-2 rounded-full text-sm lg:text-base 2xl:text-lg font-['Rajdhani'] font-semibold transition-all duration-300 ${
+                    className={`whitespace-nowrap px-2.5 lg:px-3 py-1.5 rounded-full text-sm lg:text-base font-['Rajdhani'] font-semibold transition-all duration-300 ${
                       pathname === `/category/${category.slug.current}`
                         ? "bg-[#FF1745] text-white shadow-[0_0_20px_rgba(255,23,69,0.3)]"
                         : "text-[#C0C0C0] hover:text-white hover:bg-[#FF1745]/10"
@@ -112,13 +113,12 @@ export function NavbarClient({ categories }: NavbarClientProps) {
               <div className="flex space-x-1 bg-[#1A1A1A]/50 backdrop-blur-sm rounded-full border border-[#FF1745]/10 p-1">
                 {[
                   { href: "/game-guides", label: "Game Guides" },
-    
                   { href: "/gambling-advice", label: "Gambling Advice" }
                 ].map((item) => (
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`whitespace-nowrap px-3 lg:px-4 py-2 rounded-full text-sm lg:text-base 2xl:text-lg font-['Rajdhani'] font-semibold transition-all duration-300 ${
+                    className={`whitespace-nowrap px-2.5 lg:px-3 py-1.5 rounded-full text-sm lg:text-base font-['Rajdhani'] font-semibold transition-all duration-300 ${
                       pathname === item.href
                         ? "bg-[#FF1745] text-white shadow-[0_0_20px_rgba(255,23,69,0.3)]"
                         : "text-[#C0C0C0] hover:text-white hover:bg-[#FF1745]/10"
@@ -133,7 +133,7 @@ export function NavbarClient({ categories }: NavbarClientProps) {
         </div>
 
         {/* Mobile Menu */}
-        <div className={`2xl:hidden fixed inset-0 z-40 bg-[#0D0D0D]/95 backdrop-blur-lg transform transition-transform duration-300 ${
+        <div className={`lg:hidden fixed inset-0 z-40 bg-[#0D0D0D]/95 backdrop-blur-lg transform transition-transform duration-300 ${
           isMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}>
           <div className="flex flex-col items-center justify-center min-h-screen space-y-8 p-8">
