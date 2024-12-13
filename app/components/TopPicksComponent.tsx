@@ -92,6 +92,7 @@ const TopPicksComponent = ({ casinos }: TopPicksComponentProps) => {
                     <ClaimButton
                       offerUrl={casino.offerUrl}
                       offerTitle={casino.offerTitle}
+                      categoryUrls={casino.categoryUrls}
                     />
                     
                     {casino.termsConditionsUrl && (

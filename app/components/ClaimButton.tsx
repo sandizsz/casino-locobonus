@@ -5,17 +5,33 @@ import Link from "next/link"
 interface ClaimButtonProps {
   offerUrl: string;
   offerTitle: string;
+  categorySlug?: string;
+  categoryUrls?: Array<{
+    categoryId: string;
+    categorySlug: string;
+    url: string;
+  }>;
 }
 
-export default function ClaimButton({ offerUrl, offerTitle }: ClaimButtonProps) {
+export default function ClaimButton({ offerUrl, offerTitle, categorySlug, categoryUrls }: ClaimButtonProps) {
   const friendlyUrl = `/${offerTitle.toLowerCase().replace(/\s+/g, '')}-offer`;
+
+  const getUrl = () => {
+    if (categorySlug && categoryUrls?.length) {
+      const categoryUrl = categoryUrls.find(
+        cu => cu.categorySlug === categorySlug
+      )?.url;
+      if (categoryUrl) return categoryUrl;
+    }
+    return offerUrl;
+  };
 
   return (
     <Link 
       href={friendlyUrl}
       onClick={(e) => {
         e.preventDefault();
-        window.open(offerUrl, '_blank');
+        window.open(getUrl(), '_blank');
       }}
     >
       <Button
