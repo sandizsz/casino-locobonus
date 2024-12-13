@@ -4,6 +4,7 @@ import React from 'react'
 import Image from "next/image"
 import Link from "next/link"
 import { Casino } from '../utils/interface'
+import ClaimButton from './ClaimButton'
 
 interface TopPicksComponentProps {
   casinos: Casino[]
@@ -88,14 +89,10 @@ const TopPicksComponent = ({ casinos }: TopPicksComponentProps) => {
 
                   {/* CTA Section */}
                   <div className="mt-auto pt-4 flex flex-col space-y-3">
-                    <Link
+                    <ClaimButton
                       href={casino.offerUrl}
-                      className="relative block text-center bg-gradient-to-r from-[#FF1745] to-[#D90429] text-white text-sm font-medium px-8 py-3 rounded-xl 
-                        shadow-[0_0_0_rgba(255,23,69,0)] hover:shadow-[0_0_20px_rgba(255,23,69,0.3)] transition-all duration-300
-                        hover:scale-105 z-20"
-                    >
-                      Claim Bonus
-                    </Link>
+                      offerTitle={casino.offerTitle}
+                    />
                     
                     {casino.termsConditionsUrl && (
                       <Link 

@@ -7,6 +7,7 @@ import { TypedObject } from '@portabletext/types'
 import GaugeComponent from 'react-gauge-component'
 import { Wallet, ChevronDown } from 'lucide-react'
 import { createPortal } from 'react-dom'
+import ClaimButton from './ClaimButton'; // Import ClaimButton component
 
 interface Category {
   _id: string;
@@ -269,12 +270,10 @@ const CasinoComponent: React.FC<CasinoProps> = ({ casino, index, categorySlug })
               </a>
             </div>
           )}
-         <Link 
-    href={getUrl()}
-    className="block bg-[#FF1745] hover:bg-[#D90429] text-white font-bold text-lg py-3 text-center transition-all duration-300"
-  >
-    Play
-  </Link>
+         <ClaimButton 
+              href={getUrl()}
+              offerTitle={casino.offerTitle}
+            />
         </div>
       </div>
     </div>
