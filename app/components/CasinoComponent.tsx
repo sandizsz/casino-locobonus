@@ -6,7 +6,7 @@ import { TypedObject } from '@portabletext/types'
 import GaugeComponent from 'react-gauge-component'
 import { Wallet, ChevronDown } from 'lucide-react'
 import { createPortal } from 'react-dom'
-import ClaimButton from './ClaimButton'; // Import ClaimButton component
+import ClaimButton from './ClaimButton';
 
 interface Category {
   _id: string;
@@ -32,7 +32,6 @@ interface CategoryUrl {
   url: string;
 }
 
-
 interface Casino {
   _id: string;
   offerTitle: string;
@@ -45,17 +44,16 @@ interface Casino {
   categories: Category[];
   paymentMethods: PaymentMethod[];
   orderRank?: number;
-  categoryUrls?: CategoryUrl[];  // Add this
+  categoryUrls?: CategoryUrl[];
 }
 
 interface CasinoProps {
   casino: Casino;
   index: number;
-  categorySlug?: string;  // Add this
+  categorySlug?: string;
 }
 
 const CasinoComponent: React.FC<CasinoProps> = ({ casino, index, categorySlug }) => {
-
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [isPaymentDropdownOpen, setIsPaymentDropdownOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -97,17 +95,6 @@ const CasinoComponent: React.FC<CasinoProps> = ({ casino, index, categorySlug })
       };
     }
   }, [mounted, isPaymentDropdownOpen]);
-
-    // Add URL resolution helper
-    const getUrl = () => {
-      if (categorySlug && casino.categoryUrls?.length) {
-        const categoryUrl = casino.categoryUrls.find(
-          cu => cu.categorySlug === categorySlug
-        )?.url;
-        if (categoryUrl) return categoryUrl;
-      }
-      return casino.offerUrl;
-    };
 
   // Helper function to get score text based on rating
   const getScoreText = (rating: number) => {
