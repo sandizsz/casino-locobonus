@@ -15,7 +15,7 @@ interface ClaimButtonProps {
 
 export default function ClaimButton({ offerUrl, offerTitle, categorySlug, categoryUrls }: ClaimButtonProps) {
   const friendlyUrl = `/${offerTitle.toLowerCase().replace(/\s+/g, '')}-offer`;
-
+  
   const getUrl = () => {
     if (categorySlug && categoryUrls?.length) {
       const categoryUrl = categoryUrls.find(
@@ -26,9 +26,17 @@ export default function ClaimButton({ offerUrl, offerTitle, categorySlug, catego
     return offerUrl;
   };
 
+  // Get the specific URL for the current category if it exists
+  const currentCategoryUrl = categorySlug && categoryUrls?.length 
+    ? categoryUrls.find(cu => cu.categorySlug === categorySlug)?.url 
+    : null;
+
+  // Use category URL if we're in a category and have a specific URL, otherwise use friendly URL
+  const linkHref = currentCategoryUrl || friendlyUrl;
+
   return (
     <Link 
-      href={friendlyUrl}
+      href={linkHref}
       onClick={(e) => {
         e.preventDefault();
         window.open(getUrl(), '_blank');
