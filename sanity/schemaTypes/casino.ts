@@ -58,17 +58,24 @@ export const casinoType = defineType({
             name: 'url',
             title: 'Tracking URL',
             type: 'url',
+          },
+          {
+            name: 'urlNumber',
+            title: 'URL Number',
+            type: 'string',
+            description: 'Optional: Add a number suffix to the URL (e.g., "3" for offer3)'
           }
         ],
         preview: {
           select: {
             category: 'category.title',
-            url: 'url'
+            url: 'url',
+            urlNumber: 'urlNumber'
           },
-          prepare({ category, url }) {
+          prepare({ category, url, urlNumber }) {
             return {
               title: category || 'No category selected',
-              subtitle: url
+              subtitle: `${url}${urlNumber ? ` (Number: ${urlNumber})` : ''}`
             }
           }
         }

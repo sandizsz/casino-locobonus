@@ -30,6 +30,7 @@ interface CategoryUrl {
   categoryId: string;
   categorySlug: string;
   url: string;
+  urlNumber?: string;
 }
 
 interface Casino {

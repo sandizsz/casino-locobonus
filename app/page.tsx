@@ -32,7 +32,8 @@ async function getPosts() {
       "categoryId": category->_id,
       "categorySlug": category->slug.current,
       "categoryTitle": category->title,
-      url
+      url,
+      urlNumber
     },
     tags[]-> {
       _id,
