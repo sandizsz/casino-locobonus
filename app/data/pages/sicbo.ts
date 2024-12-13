@@ -1,7 +1,7 @@
 export const sicboData = {
     slug: "sic-bo",
     title: "Sic Bo Guide",
-    image: "/images/sicbo.jpeg",
+    image: "/images/sicbo.webp",
     description: "Discover Sic Bo, an ancient Chinese dice game offering fast-paced action and diverse betting options with three dice determining your fortune.",
     content: `
       <div class="prose prose-slate lg:prose-lg">

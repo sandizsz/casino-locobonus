@@ -1,7 +1,7 @@
 export const blackjackData = {
   slug: "blackjack",
   title: "Blackjack Guide",
-  image: "/images/blackjack_rules.jpg",
+  image: "/images/blackjack.webp",
   description: "You must know the basics of the game before you get down to playing it. Go through our entire website to learn about the different aspects of playing blackjack.",
   content: `
     <h2>Introduction to Blackjack</h2>

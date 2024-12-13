@@ -32,6 +32,13 @@ export default {
               color: '#FF1745',
               textShadow: '0 0 30px #FF1745',
             },
+            h4: {
+              color: '#FF1745',
+              fontSize: '1.25rem',
+              fontWeight: '600',
+              marginTop: '1.5rem',
+              marginBottom: '1rem',
+            },
             p: {
               color: '#9CA3AF',
             },
@@ -43,6 +50,16 @@ export default {
             },
             strong: {
               color: 'white',
+            },
+            dt: {
+              color: 'white',
+              fontWeight: '600',
+              marginTop: '1rem',
+            },
+            dd: {
+              color: '#9CA3AF',
+              marginLeft: '1.5rem',
+              marginBottom: '0.5rem',
             },
             a: {
               color: '#FF1745',

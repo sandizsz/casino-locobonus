@@ -28,6 +28,11 @@ async function getCasinosByCategory(slug: string) {
     rating,
     "imageUrl": casinoImage.asset->url,
     termsConditionsUrl,
+    "categoryUrls": categoryUrls[] {
+      "categoryId": category->_id,
+      "categorySlug": category->slug.current,
+      url
+    },
     categories[]-> {
       _id,
       title,
@@ -43,7 +48,6 @@ async function getCasinosByCategory(slug: string) {
       }
     }
   }`;
-
   const data = await client.fetch(query);
   return data as Casino[];
 }
@@ -65,9 +69,8 @@ export const revalidate = 60;
 export default async function CategoryPage({ params }: PageProps) {
   const parameters = await params;
   const slug = parameters.slug;
-  
   const category = await getCategory(slug);
-  
+
   if (!category) {
     return (
       <div className="min-h-screen from-[#1A1A1A] to-[#0D0D0D] flex items-center justify-center">
@@ -77,7 +80,7 @@ export default async function CategoryPage({ params }: PageProps) {
   }
 
   const casinos: Casino[] = await getCasinosByCategory(slug);
-
+  
   return (
     <div className="min-h-screen from-[#1A1A1A] to-[#0D0D0D]">
       <AnimatedSection className="w-full py-20 bg-gradient-to-b from-[#1A1A1A] to-[#0D0D0D] relative overflow-hidden">
@@ -85,7 +88,6 @@ export default async function CategoryPage({ params }: PageProps) {
           <h1 className="text-4xl md:text-6xl font-['Orbitron'] font-bold text-center text-[#FF1745] [text-shadow:_0_0_30px_#FF1745] mb-12">
             {category.title}
           </h1>
-
           {category.description && (
             <div className="max-w-4xl mx-auto mb-12">
               <p className="text-[#C0C0C0] text-lg text-center font-['Rajdhani'] leading-relaxed">
@@ -93,18 +95,20 @@ export default async function CategoryPage({ params }: PageProps) {
               </p>
             </div>
           )}
-          
           <div className="space-y-6">
             <div className="grid md:grid-cols-3 gap-6">
               {casinos?.map((casino, index) => (
                 <div key={casino._id} className="md:col-span-1">
                   <AnimatedSection>
-                    <CasinoComponent casino={casino} index={index} />
+                    <CasinoComponent 
+                      casino={casino} 
+                      index={index} 
+                      categorySlug={slug}  // Pass the category slug
+                    />
                   </AnimatedSection>
                 </div>
               ))}
             </div>
-
             {(!casinos || casinos.length === 0) && (
               <div className="text-center p-12 bg-[#1E2A44]/50 rounded-lg border border-[#00A3FF] shadow-[0_0_20px_rgba(0,163,255,0.3)]">
                 <p className="text-xl font-['Rajdhani'] text-[#C0C0C0]">

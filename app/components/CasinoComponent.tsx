@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { TypedObject } from '@portabletext/types'
 import GaugeComponent from 'react-gauge-component'
 import { Wallet, ChevronDown } from 'lucide-react'
+import { createPortal } from 'react-dom'
 
 interface Category {
   _id: string;
@@ -14,8 +15,6 @@ interface Category {
     current: string;
   };
 }
-
-
 
 interface PaymentMethod {
   _id: string;
@@ -26,6 +25,13 @@ interface PaymentMethod {
     };
   };
 }
+
+interface CategoryUrl {
+  categoryId: string;
+  categorySlug: string;
+  url: string;
+}
+
 
 interface Casino {
   _id: string;
@@ -39,27 +45,25 @@ interface Casino {
   categories: Category[];
   paymentMethods: PaymentMethod[];
   orderRank?: number;
+  categoryUrls?: CategoryUrl[];  // Add this
 }
 
 interface CasinoProps {
   casino: Casino;
   index: number;
+  categorySlug?: string;  // Add this
 }
 
+const CasinoComponent: React.FC<CasinoProps> = ({ casino, index, categorySlug }) => {
 
-const CasinoComponent: React.FC<CasinoProps> = ({ casino, index }) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
-  
-  // Helper function to get score text based on rating
-  const getScoreText = (rating: number) => {
-    if (rating >= 9.0) return 'Excellent';
-    if (rating >= 4.0) return 'Great';
-    if (rating >= 3.5) return 'Very Good';
-    if (rating >= 3.0) return 'Good';
-    return 'Fair';
-  };
-
   const [isPaymentDropdownOpen, setIsPaymentDropdownOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0, width: 0 });
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -68,11 +72,51 @@ const CasinoComponent: React.FC<CasinoProps> = ({ casino, index }) => {
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+    const updateDropdownPosition = () => {
+      if (dropdownRef.current && isPaymentDropdownOpen) {
+        const rect = dropdownRef.current.getBoundingClientRect();
+        const scrollY = window.scrollY;
+        setDropdownPosition({
+          top: rect.bottom + scrollY + 8,
+          left: rect.left,
+          width: rect.width,
+        });
+      }
     };
-  }, []);
+
+    if (mounted) {
+      document.addEventListener('mousedown', handleClickOutside);
+      window.addEventListener('scroll', updateDropdownPosition);
+      window.addEventListener('resize', updateDropdownPosition);
+      updateDropdownPosition();
+      
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+        window.removeEventListener('scroll', updateDropdownPosition);
+        window.removeEventListener('resize', updateDropdownPosition);
+      };
+    }
+  }, [mounted, isPaymentDropdownOpen]);
+
+    // Add URL resolution helper
+    const getUrl = () => {
+      if (categorySlug && casino.categoryUrls?.length) {
+        const categoryUrl = casino.categoryUrls.find(
+          cu => cu.categorySlug === categorySlug
+        )?.url;
+        if (categoryUrl) return categoryUrl;
+      }
+      return casino.offerUrl;
+    };
+
+  // Helper function to get score text based on rating
+  const getScoreText = (rating: number) => {
+    if (rating >= 9.0) return 'Excellent';
+    if (rating >= 4.0) return 'Great';
+    if (rating >= 3.5) return 'Very Good';
+    if (rating >= 3.0) return 'Good';
+    return 'Fair';
+  };
 
   return (
     <div className="relative group h-full flex-grow">
@@ -89,7 +133,7 @@ const CasinoComponent: React.FC<CasinoProps> = ({ casino, index }) => {
               />
             </div>
             <h3 className="text-base font-semibold text-white">
-              {casino.offerTitle.split(' ')[0]}
+              {casino.offerTitle}
             </h3>
           </div>
           
@@ -130,12 +174,10 @@ const CasinoComponent: React.FC<CasinoProps> = ({ casino, index }) => {
                     style: { 
                       fontSize: "80px",
                       fill: "#ffffff",
-                   
                     }
                   },
                   tickLabels: {
                     hideMinMax: true,
-                  
                     ticks: [],
                     defaultTickValueConfig: {
                       hide: true
@@ -173,13 +215,16 @@ const CasinoComponent: React.FC<CasinoProps> = ({ casino, index }) => {
             />
           </button>
           
-          {isPaymentDropdownOpen && (
-            <div className="fixed z-50 mt-2 bg-[#2B2B2B] border border-[#FF1745]/10 rounded-lg shadow-lg" style={{ 
-              width: dropdownRef.current?.offsetWidth || 'auto',
-              left: dropdownRef.current?.getBoundingClientRect().left || 0,
-              top: (dropdownRef.current?.getBoundingClientRect().bottom || 0) + 8
-            }}>
-              <div className="p-2 grid grid-cols-2 gap-2">
+          {mounted && isPaymentDropdownOpen && createPortal(
+            <div 
+              className="absolute bg-[#2B2B2B] border border-[#FF1745]/10 rounded-lg shadow-lg z-[40]"
+              style={{
+                top: `${dropdownPosition.top}px`,
+                left: `${dropdownPosition.left}px`,
+                width: `${dropdownPosition.width}px`,
+              }}
+            >
+              <div className="p-2 grid grid-cols-2 gap-2 max-h-[300px] overflow-y-auto">
                 {casino.paymentMethods.map((method) => (
                   <div
                     key={method._id}
@@ -198,7 +243,8 @@ const CasinoComponent: React.FC<CasinoProps> = ({ casino, index }) => {
                   </div>
                 ))}
               </div>
-            </div>
+            </div>,
+            document.body
           )}
         </div>
 
@@ -223,12 +269,12 @@ const CasinoComponent: React.FC<CasinoProps> = ({ casino, index }) => {
               </a>
             </div>
           )}
-          <Link 
-            href={casino.offerUrl}
-            className="block bg-[#FF1745] hover:bg-[#D90429] text-white font-bold text-lg py-3 text-center transition-all duration-300"
-          >
-            Play
-          </Link>
+         <Link 
+    href={getUrl()}
+    className="block bg-[#FF1745] hover:bg-[#D90429] text-white font-bold text-lg py-3 text-center transition-all duration-300"
+  >
+    Play
+  </Link>
         </div>
       </div>
     </div>

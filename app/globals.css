@@ -393,64 +393,68 @@ body {
 
 @layer base {
   /* Legal content styles */
-  .legal-content h2 {
-    @apply text-2xl font-bold text-[#FF1745] mb-6 mt-8 font-['Orbitron'] border-b border-[#FF1745]/20 pb-2;
-  }
-
-  .legal-content h3 {
-    @apply text-xl font-bold text-[#FF1745] mb-4 mt-6 font-['Orbitron'];
-  }
-
-  .legal-content p:not(.game-guide-label) {
-    @apply  text-[#C0C0C0] leading-relaxed font-['Rajdhani'];
-  }
-
-  .legal-content ul {
-    @apply mb-6 text-[#C0C0C0] space-y-3 font-['Rajdhani'];
-  }
-
-  .legal-content li {
-    @apply ml-4 pl-4 border-l-2 border-[#FF1745]/20;
-  }
-
-  .legal-content li::marker {
-    @apply text-[#FF1745];
-  }
-
-  .legal-content blockquote {
-    @apply pl-4 border-l-4 border-[#FF1745] italic text-[#C0C0C0] my-6 font-['Rajdhani'];
-  }
-
-  /* Grid styles */
-  .legal-content [class*='grid-cols'] {
-    display: grid;
-    @apply gap-6 mb-6;
-  }
-
-  @media (min-width: 1024px) {
-    .legal-content .grid-cols-2 {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+  .legal-content {
+    h2 {
+      @apply text-2xl font-bold text-[#FF1745] mb-6 mt-8 font-['Orbitron'] border-b border-[#FF1745]/20 pb-2;
+    }
+    h3 {
+      @apply text-xl font-bold text-[#FF1745] mb-4 mt-6 font-['Orbitron'];
+    }
+    h4 {
+      @apply text-[#FF1745] font-['Orbitron'] text-sm  font-thin mt-6 mb-4;
+    }
+    p:not(.game-guide-label) {
+      @apply  text-[#C0C0C0] leading-relaxed font-['Rajdhani'];
+    }
+    ul {
+      @apply mb-6 text-[#C0C0C0] space-y-3 font-['Rajdhani'];
+    }
+    li {
+      @apply ml-4 pl-4 border-l-2 border-[#FF1745]/20;
+    }
+    li::marker {
+      @apply text-[#FF1745];
+    }
+    blockquote {
+      @apply pl-4 border-l-4 border-[#FF1745] italic text-[#C0C0C0] my-6 font-['Rajdhani'];
+    }
+    dt {
+      @apply text-white font-semibold mt-4;
+    }
+    dd {
+      @apply text-gray-400 ml-6 mb-2;
+    }
+    /* Grid styles */
+    [class*='grid-cols'] {
+      display: grid;
+      @apply gap-6 mb-6;
     }
 
-    .legal-content .grid-cols-3 {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+    @media (min-width: 1024px) {
+      .grid-cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .grid-cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
     }
-  }
 
-  .legal-content table {
-    @apply w-full mb-6 border-collapse;
-  }
+    table {
+      @apply w-full mb-6 border-collapse;
+    }
 
-  .legal-content table th {
-    @apply bg-[#1E2A44] text-[#FF1745] p-3 text-left font-['Orbitron'] border border-[#FF1745]/20;
-  }
+    table th {
+      @apply bg-[#1E2A44] text-[#FF1745] p-3 text-left font-['Orbitron'] border border-[#FF1745]/20;
+    }
 
-  .legal-content table td {
-    @apply p-3 text-[#C0C0C0] border border-[#FF1745]/20 font-['Rajdhani'];
-  }
+    table td {
+      @apply p-3 text-[#C0C0C0] border border-[#FF1745]/20 font-['Rajdhani'];
+    }
 
-  .legal-content div > div {
-    @apply mb-6;
+    div > div {
+      @apply mb-6;
+    }
   }
 }
 

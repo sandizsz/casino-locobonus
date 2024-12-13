@@ -1,7 +1,7 @@
 export const slotsData = {
     slug: "online-slots",
     title: "Online Slots Guide",
-    image: "/images/slots.jpeg",
+    image: "/images/slots.webp",
     description: "From the first Liberty Bell to modern video slots, discover the evolution and strategies of slot machines in both physical and online casinos.",
     content: `
       <div class="prose">

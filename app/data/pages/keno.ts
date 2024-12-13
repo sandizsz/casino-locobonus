@@ -1,7 +1,7 @@
 export const kenoData = {
     slug: "keno",
     title: "Keno Guide",
-    image: "/images/keno.jpeg",
+    image: "/images/keno.webp",
     description: "A relaxing casino game that offers simple gameplay with potentially handsome payouts, perfect for casual players looking for entertainment.",
     content: `
       <div class="prose">

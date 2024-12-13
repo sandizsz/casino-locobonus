@@ -1,7 +1,7 @@
 export const crapsData = {
     slug: "craps",
     title: "Craps Guide",
-    image: "/images/craps.jpeg",
+    image: "/images/craps.webp",
     description: "Learn the exciting dice game of craps, from its rich history dating back to the 12th century to modern online variations and strategy tips.",
     content: `
       <h2>History of Craps</h2>

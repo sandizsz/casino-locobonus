@@ -27,6 +27,12 @@ export interface Tag {
   };
 }
 
+export interface CategoryUrl {
+  categoryId: string;
+  categorySlug: string;
+  url: string;
+}
+
 export interface Casino {
   _id: string;
   offerTitle: string;
@@ -39,6 +45,7 @@ export interface Casino {
   categories: Category[];
   tags: Tag[];
   paymentMethods: PaymentMethod[];
+  categoryUrls?: CategoryUrl[];  // Added this optional field
 }
 
 export interface PageProps {

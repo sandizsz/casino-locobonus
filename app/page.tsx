@@ -1,4 +1,3 @@
-
 import { ArrowRight, Sparkles } from 'lucide-react';
 import Image from "next/image";
 import Link from "next/link";
@@ -20,7 +19,7 @@ import PaymentMethods from './components/PaymentMethods';
 
 
 async function getPosts() {
-  const query = `*[_type == "casino"] | order(orderRank)[0...15] {
+  const query = `*[_type == "casino"] | order(orderRank)[0...50] {
     _id,
     offerTitle,
     offerUrl,
@@ -29,6 +28,12 @@ async function getPosts() {
     rating,
     "imageUrl": casinoImage.asset->url,
     termsConditionsUrl,
+    "categoryUrls": categoryUrls[] {
+      "categoryId": category->_id,
+      "categorySlug": category->slug.current,
+      "categoryTitle": category->title,
+      url
+    },
     tags[]-> {
       _id,
       title,
@@ -59,7 +64,9 @@ async function getPosts() {
 export const revalidate = 60;
 
 export default async function Home() {
-  const casinos: Casino[] = (await getPosts()).slice(0, 15);
+
+  // 4 first casinos removed
+  const casinos: Casino[] = (await getPosts()).slice(0, 16);
 
   // Get unique payment methods from all casinos
   const uniquePaymentMethods = Array.from(
@@ -202,11 +209,22 @@ export default async function Home() {
               Most exciting offers picked by <span className="text-[#FF1745]">LOCOBONUS</span>
             </h2>
 
+
+            {/* First 4 Casinos Removed */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              {casinos?.length > 0 && casinos.map((casino, index) => (
+
+           
+              {casinos?.length > 0 && casinos.slice(4, 50).map((casino, index) => (
                 <CasinoComponent key={casino._id} casino={casino} index={index} />
               ))}
             </div>
+
+            <div className="flex justify-center mt-12">
+                <Link href={`/category/all-bonuses`} className="inline-flex items-center px-6 py-3 rounded-lg bg-[#FF1745] hover:bg-[#D90429] text-white font-semibold transition-colors duration-300">
+                  View All Bonuses
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </div>
           </div>
         </AnimatedSection>
 

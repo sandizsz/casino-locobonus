@@ -1,7 +1,7 @@
 export const rouletteData = {
   slug: "roulette",
   title: "Roulette Guide",
-  image: "/images/roullete.png",
+  image: "/images/roulette.webp",
   description: "This guide has everything you need to know on how to increase your chances to win at roulette and get better odds when you play this exciting casino game.",
   content: `
     <h2>Introduction to Roulette</h2>

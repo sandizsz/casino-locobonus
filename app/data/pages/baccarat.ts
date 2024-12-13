@@ -1,7 +1,7 @@
 export const baccaratData = {
   slug: "baccarat",
   title: "Baccarat Guide",
-  image: "/images/baccarat.jpeg",
+  image: "/images/baccarat.webp",
   description: "From French nobility to modern casinos, discover the rich history and gameplay of Baccarat, a game that combines elegance with chance.",
   content: `
     <div class="prose">

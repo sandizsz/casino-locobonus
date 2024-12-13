@@ -9,16 +9,27 @@ interface TopPicksComponentProps {
   casinos: Casino[]
 }
 
+export const revalidate = 60;
+
 const TopPicksComponent = ({ casinos }: TopPicksComponentProps) => {
   // Define the order of tags we want to display
-  const tagOrder = ['hot', 'new', 'exclusive', 'vip'];
+  const tagOrder = ['best-deposit-bonus', 'fast-withdrawal', 'most-reliable', 'vip'];
+  
+
   
   // Filter casinos to get one casino per tag, following our preferred order
   const topPicks = tagOrder.map(tagSlug => {
-    return casinos.find(casino => 
-      casino.tags?.some((tag: { slug: { current: string } }) => tag.slug.current.toLowerCase() === tagSlug)
+    const matchingCasino = casinos.find(casino => 
+      casino.tags?.some((tag: { slug: { current: string } }) => {
+      
+        return tag.slug.current.toLowerCase() === tagSlug;
+      })
     );
+  
+    return matchingCasino;
   }).filter((casino): casino is Casino => casino !== undefined);
+
+
 
   return (
     <div className="w-full bg-[#0D0D0D] py-20">
@@ -45,13 +56,13 @@ const TopPicksComponent = ({ casinos }: TopPicksComponentProps) => {
               
               {/* Category Badge */}
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
-                <div className="bg-gradient-to-r from-[#FF1745] to-[#D90429] text-white text-sm font-bold px-6 py-1.5 rounded-full shadow-lg">
+                <div className="bg-gradient-to-r from-[#FF1745] to-[#D90429] text-white text-sm font-bold px-8 py-1.5 rounded-full shadow-lg min-w-[180px] text-center whitespace-nowrap">
                   {casino.tags?.[0]?.title || tagOrder[index].toUpperCase()}
                 </div>
               </div>
 
               {/* Content */}
-              <div className="p-6 pt-8 relative z-10">
+              <div className="p-6 pt-8 relative z-10 flex flex-col h-full">
                 {/* Logo Container */}
                 <div className="relative w-full aspect-square mb-6 bg-black/30 rounded-xl p-4">
                   <div className="relative w-full h-full group-hover:scale-110 transition-transform duration-300">
@@ -65,16 +76,18 @@ const TopPicksComponent = ({ casinos }: TopPicksComponentProps) => {
                 </div>
 
                 {/* Text Content */}
-                <div className="space-y-4">
-                  <h3 className="text-white text-lg font-medium line-clamp-1 group-hover:text-[#FF1745] transition-colors">
-                    {casino.offerTitle}
-                  </h3>
-                  <p className="text-[#FF1745] text-sm font-bold">
-                    {casino.offerDescription}
-                  </p>
+                <div className="flex flex-col flex-grow">
+                  <div className="space-y-4">
+                    <h3 className="text-white text-lg font-medium line-clamp-1 group-hover:text-[#FF1745] transition-colors">
+                      {casino.offerTitle}
+                    </h3>
+                    <p className="text-[#FF1745] text-sm font-bold">
+                      {casino.offerDescription}
+                    </p>
+                  </div>
 
                   {/* CTA Section */}
-                  <div className="pt-4 flex flex-col space-y-3">
+                  <div className="mt-auto pt-4 flex flex-col space-y-3">
                     <Link
                       href={casino.offerUrl}
                       className="relative block text-center bg-gradient-to-r from-[#FF1745] to-[#D90429] text-white text-sm font-medium px-8 py-3 rounded-xl 

@@ -37,8 +37,42 @@ export const casinoType = defineType({
     },
     {
       name: 'offerUrl',
-      title: 'Offer URL',
+      title: 'Default Offer URL',
       type: 'url',
+    },
+    {
+      name: 'categoryUrls',
+      title: 'Category Specific URLs',
+      description: 'Optional: Add different tracking URLs for specific categories',
+      type: 'array',
+      of: [{
+        type: 'object',
+        fields: [
+          {
+            name: 'category',
+            title: 'Category',
+            type: 'reference',
+            to: [{ type: 'category' }]
+          },
+          {
+            name: 'url',
+            title: 'Tracking URL',
+            type: 'url',
+          }
+        ],
+        preview: {
+          select: {
+            category: 'category.title',
+            url: 'url'
+          },
+          prepare({ category, url }) {
+            return {
+              title: category || 'No category selected',
+              subtitle: url
+            }
+          }
+        }
+      }],
     },
     {
       name: 'termsConditionsUrl',
@@ -66,13 +100,11 @@ export const casinoType = defineType({
       ]
     },
     {
-        name: 'categories',
-        title: "Categories",
-        type: "array",
-        of: [{ type: "reference", to: [{ type: "category"}]}],
-
+      name: 'categories',
+      title: "Categories",
+      type: "array",
+      of: [{ type: "reference", to: [{ type: "category"}]}],
     },
-
     {
       name: 'tags',
       title: 'Tags',
@@ -81,10 +113,10 @@ export const casinoType = defineType({
       validation: (Rule) => Rule.unique()
     },
     {
-        name: 'paymentMethods',
-        title: "Payment Methods",
-        type: "array",
-        of: [{ type: "reference", to: [{ type: "paymentMethod"}]}],
+      name: 'paymentMethods',
+      title: "Payment Methods",
+      type: "array",
+      of: [{ type: "reference", to: [{ type: "paymentMethod"}]}],
     }
   ],
 });
