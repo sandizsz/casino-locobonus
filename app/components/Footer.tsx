@@ -27,49 +27,49 @@ export default function Footer() {
       {/* Gambling Awareness Logos */}
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
-          <Link href="https://www.gamblingtherapy.org" className="transform hover:scale-105 transition-all duration-300">
+          <Link href="https://www.gamblingtherapy.org" className="transform hover:scale-110 hover:rotate-2 transition-all duration-300">
             <Image 
               src="/images/GAMBLING_THERAPY-logo.png" 
               alt="Gambling Therapy Logo"
               width={100}
               height={50}
-              className="h-8 w-auto object-contain opacity-50 hover:opacity-100 transition-all duration-300"
+              className="h-8 w-auto object-contain opacity-100 brightness-125 transition-all duration-300"
             />
           </Link>
-          <Link href="" className="transform hover:scale-105 transition-all duration-300">
+          <Link href="" className="transform hover:scale-110 hover:rotate-2 transition-all duration-300">
             <Image 
               src="/images/Image1.png" 
               alt="Gambling Awareness Logo 1"
               width={100}
               height={50}
-              className="h-8 w-auto object-contain opacity-50 hover:opacity-100 transition-all duration-300"
+              className="h-8 w-auto object-contain opacity-100 transition-all duration-300"
             />
           </Link>
-          <Link href="https://www.gambleaware.org/" className="transform hover:scale-105 transition-all duration-300">
+          <Link href="https://www.gambleaware.org/" className="transform hover:scale-110 hover:rotate-2 transition-all duration-300">
             <Image 
               src="/images/Image2.png"
               alt="Gambling Awareness Logo 2"
               width={100}
               height={50}
-              className="h-8 w-auto object-contain opacity-50 hover:opacity-100 transition-all duration-300"
+              className="h-8 w-auto object-contain opacity-100 transition-all duration-300"
             />
           </Link>
-          <Link href="https://www.gamcare.org.uk/" className="transform hover:scale-105 transition-all duration-300">
+          <Link href="https://www.gamcare.org.uk/" className="transform hover:scale-110 hover:rotate-2 transition-all duration-300">
             <Image 
               src="/images/Image3.png"
               alt="Gambling Awareness Logo 3"
               width={100}
               height={50}
-              className="h-8 w-auto object-contain opacity-50 hover:opacity-100 transition-all duration-300"
+              className="h-8 w-auto object-contain opacity-100 transition-all duration-300"
             />
           </Link>
-          <Link href="https://www.gamstop.co.uk" className="transform hover:scale-105 transition-all duration-300">
+          <Link href="https://www.gamstop.co.uk" className="transform hover:scale-110 hover:rotate-2 transition-all duration-300">
             <Image 
               src="/images/Image4.png"
               alt="Gambling Awareness Logo 4"
               width={100}
               height={50}
-              className="h-8 w-auto object-contain opacity-50 hover:opacity-100 transition-all duration-300"
+              className="h-8 w-auto object-contain opacity-100 transition-all duration-300"
             />
           </Link>
         </div>
