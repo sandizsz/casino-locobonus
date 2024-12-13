@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useRef } from 'react'
 import Image from "next/image";
-import Link from 'next/link'
 import { TypedObject } from '@portabletext/types'
 import GaugeComponent from 'react-gauge-component'
 import { Wallet, ChevronDown } from 'lucide-react'
