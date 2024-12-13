@@ -3,11 +3,11 @@ import { Button } from "./ui/button"
 import Link from "next/link"
 
 interface ClaimButtonProps {
-  href: string;
+  offerUrl: string;
   offerTitle: string;
 }
 
-export default function ClaimButton({ href, offerTitle }: ClaimButtonProps) {
+export default function ClaimButton({ offerUrl, offerTitle }: ClaimButtonProps) {
   const friendlyUrl = `/${offerTitle.toLowerCase().replace(/\s+/g, '')}-offer`;
 
   return (
@@ -15,7 +15,7 @@ export default function ClaimButton({ href, offerTitle }: ClaimButtonProps) {
       href={friendlyUrl}
       onClick={(e) => {
         e.preventDefault();
-        window.open(href, '_blank');
+        window.open(offerUrl, '_blank');
       }}
     >
       <Button

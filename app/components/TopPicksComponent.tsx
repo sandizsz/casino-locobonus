@@ -90,7 +90,7 @@ const TopPicksComponent = ({ casinos }: TopPicksComponentProps) => {
                   {/* CTA Section */}
                   <div className="mt-auto pt-4 flex flex-col space-y-3">
                     <ClaimButton
-                      href={casino.offerUrl}
+                      offerUrl={casino.offerUrl}
                       offerTitle={casino.offerTitle}
                     />
                     

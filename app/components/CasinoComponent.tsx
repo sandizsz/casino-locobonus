@@ -270,7 +270,7 @@ const CasinoComponent: React.FC<CasinoProps> = ({ casino, index, categorySlug })
             </div>
           )}
          <ClaimButton 
-              href={getUrl()}
+              offerUrl={getUrl()}
               offerTitle={casino.offerTitle}
             />
         </div>
