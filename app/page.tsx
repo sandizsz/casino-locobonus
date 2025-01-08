@@ -122,7 +122,7 @@ export default async function Home() {
                   <div>
                   Casino Sites in
                     <div className="relative inline-block ml-2">
-                      <span className="text-[#FF1745]">2024</span>
+                      <span className="text-[#FF1745]">2025</span>
                       <div className="absolute -bottom-2 left-0 w-full h-1 bg-[#FF1745]/30 rounded-full"></div>
                     </div>
                   </div>
